@@ -57,9 +57,19 @@ public class AnswerRepositoryTest {
 		questionRepository.save(question);
 		answerRepository.save(firstAnswer);
 		answerRepository.save(secondAnswer);
-		List<Answer> answers = answerRepository.findAll();
+		List<Answer> savedAnswers = answerRepository.findAll();
 
-		assertThat(answers).isNotNull();
+		assertThat(savedAnswers).isNotNull();
 	}
 
+	@Test
+	public void findAnswersByQuestion() {
+		questionRepository.save(question);
+		answerRepository.save(firstAnswer);
+		answerRepository.save(secondAnswer);
+		List<Answer> savedAnswers = answerRepository
+				.findAnswersByQuestion(question);
+
+		assertThat(savedAnswers).isNotNull();
+	}
 }

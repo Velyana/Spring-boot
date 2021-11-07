@@ -7,9 +7,9 @@ import com.example.questionnaire.entity.Question;
 
 public interface QuestionService {
 
-	public List<Question> findAll();
+	List<Question> findAll();
 
-	public void addQuestion(Question q);
+	void addQuestion(Question q);
 
-	public Optional<Question> findById(int id);
+	Optional<Question> findById(int id);
 }

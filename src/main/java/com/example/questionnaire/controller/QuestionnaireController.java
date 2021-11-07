@@ -1,5 +1,6 @@
 package com.example.questionnaire.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +28,14 @@ public class QuestionnaireController {
 	private AnswerService answerService;
 
 	@GetMapping("/questions")
-	public List<Question> getAllQuestions() {
+	public List<Question> findAllQuestions() {
 		final List<Question> questionList = questionService.findAll();
 		System.out.println("TEST controller");
 		return questionList;
 	}
 
 	@GetMapping("/questions/{id}")
-	public Optional<Question> getQuestionById(@PathVariable int id) {
+	public Optional<Question> findQuestionById(@PathVariable int id) {
 		final Optional<Question> question = questionService.findById(id);
 
 		return question;
@@ -46,7 +47,7 @@ public class QuestionnaireController {
 	}
 
 	@GetMapping("/answers")
-	public List<Answer> getAllAnswers() {
+	public List<Answer> findAllAnswers() {
 		final List<Answer> answerList = answerService.findAll();
 		return answerList;
 	}
@@ -54,6 +55,15 @@ public class QuestionnaireController {
 	@PostMapping("/answers")
 	public void createAnswer(@RequestBody Answer answer) {
 		answerService.addAnswer(answer);
+	}
+
+	@GetMapping("/answers/{questionId}")
+	public List<Answer> findAnswersByQuestion(@PathVariable int questionId) {
+		Optional<Question> question = questionService.findById(questionId);
+		List<Answer> answerList = new ArrayList<>();
+		if (question != null)
+			answerList = answerService.findAnswersByQuestion(question.get());
+		return answerList;
 	}
 
 }
