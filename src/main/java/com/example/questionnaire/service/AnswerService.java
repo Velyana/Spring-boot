@@ -6,7 +6,7 @@ import com.example.questionnaire.entity.Answer;
 
 public interface AnswerService {
 
-	public List<Answer> getAll();
-	
+	public List<Answer> findAll();
+
 	public void addAnswer(Answer a);
 }

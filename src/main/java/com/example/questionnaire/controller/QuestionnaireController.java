@@ -1,6 +1,7 @@
 package com.example.questionnaire.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +28,14 @@ public class QuestionnaireController {
 
 	@GetMapping("/questions")
 	public List<Question> getAllQuestions() {
-		final List<Question> questionList = questionService.getAll();
+		final List<Question> questionList = questionService.findAll();
+		System.out.println("TEST controller");
 		return questionList;
 	}
 
 	@GetMapping("/questions/{id}")
-	public Question getQuestionById(@PathVariable int id) {
-		final Question question = questionService.getById(id);
+	public Optional<Question> getQuestionById(@PathVariable int id) {
+		final Optional<Question> question = questionService.findById(id);
 
 		return question;
 	}
@@ -45,7 +47,7 @@ public class QuestionnaireController {
 
 	@GetMapping("/answers")
 	public List<Answer> getAllAnswers() {
-		final List<Answer> answerList = answerService.getAll();
+		final List<Answer> answerList = answerService.findAll();
 		return answerList;
 	}
 

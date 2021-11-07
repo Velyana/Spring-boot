@@ -13,16 +13,16 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Autowired
 	private AnswerRepository answerRepository;
-	
+
 	@Override
-	public List<Answer> getAll() {
-		return answerRepository.getAll();
+	public List<Answer> findAll() {
+		return answerRepository.findAll();
 	}
 
 	@Override
 	public void addAnswer(Answer a) {
-		answerRepository.addAnswer(a);
-		
+		answerRepository.save(a);
+
 	}
 
 }

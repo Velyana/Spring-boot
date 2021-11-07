@@ -1,33 +1,39 @@
 package com.example.questionnaire.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "answer")
 public class Answer {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
-	private int questionId;
+
+	@Column(name = "answer")
 	private String answer;
-	
-	public Answer() {}
-	
-	public Answer(int id, int questionId, String answer) {
-		this.id = id;
-		this.questionId = questionId;
+
+	@ManyToOne
+	@JoinColumn(name = "question_id", nullable = false)
+	private Question question;
+
+	public Answer() {
+	}
+
+	public Answer(String answer) {
 		this.answer = answer;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getQuestionId() {
-		return questionId;
-	}
-
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
 	}
 
 	public String getAnswer() {
@@ -38,13 +44,20 @@ public class Answer {
 		this.answer = answer;
 	}
 
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
 		result = prime * result + id;
-		result = prime * result + questionId;
 		return result;
 	}
 
@@ -64,9 +77,7 @@ public class Answer {
 			return false;
 		if (id != other.id)
 			return false;
-		if (questionId != other.questionId)
-			return false;
 		return true;
 	}
-	
+
 }

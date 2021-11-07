@@ -1,28 +1,60 @@
 package com.example.questionnaire.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "question")
 public class Question {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
+
+	@Column(name = "question")
 	private String question;
-	
-	public Question() {}
-	
-	public Question(int id, String question) {
-		this.id = id;
+
+	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JsonIgnore
+	private List<Answer> answers;
+
+	public Question() {
+	}
+
+	public Question(String question) {
 		this.question = question;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getQuestion() {
 		return question;
 	}
+
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 	@Override
@@ -53,5 +85,5 @@ public class Question {
 			return false;
 		return true;
 	}
-	
+
 }
