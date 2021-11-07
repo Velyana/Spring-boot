@@ -32,6 +32,11 @@ public class Answer {
 		this.answer = answer;
 	}
 
+	public Answer(String answer, Question question) {
+		this.answer = answer;
+		this.question = question;
+	}
+
 	public int getId() {
 		return id;
 	}

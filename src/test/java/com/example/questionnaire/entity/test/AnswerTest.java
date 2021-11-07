@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,6 +16,7 @@ import com.example.questionnaire.entity.Question;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AnswerTest {
 
 	@Autowired
@@ -22,29 +24,34 @@ public class AnswerTest {
 
 	private Answer firstAnswer;
 
+	private Question question;
+
 	@Before
 	public void setUp() {
-		firstAnswer = new Answer("Answer 1");
+		question = new Question("Question");
+		firstAnswer = new Answer("Answer 1", question);
 	}
 
 	@Test
-	public void saveQuestion() {
+	public void saveAnswer() {
+		this.entityManager.persistAndFlush(question);
 		Answer savedAnswer = this.entityManager.persistAndFlush(firstAnswer);
 
 		assertThat(savedAnswer).isNotNull();
-		assertThat(savedAnswer.getQuestion()).isEqualTo("Answer 1");
+		assertThat(savedAnswer.getAnswer()).isEqualTo("Answer 1");
 	}
 
 	@Test
-	public void findQuestion() {
+	public void findAnswer() {
+		this.entityManager.persistAndFlush(question);
 		Answer savedAnswer = this.entityManager.persistAndFlush(firstAnswer);
 
-		assertThat(savedAnswer.getQuestion()).isNotNull();
+		assertThat(savedAnswer.getAnswer()).isNotNull();
 
 		int id = (int) this.entityManager.getId(savedAnswer);
-		Question question = this.entityManager.find(Question.class, id);
+		Answer answer = this.entityManager.find(Answer.class, id);
 
-		assertThat(question.getQuestion()).isEqualTo("Answer 1");
+		assertThat(answer.getAnswer()).isEqualTo("Answer 1");
 	}
 
 }

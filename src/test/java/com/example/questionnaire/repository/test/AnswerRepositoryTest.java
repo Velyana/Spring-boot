@@ -35,12 +35,9 @@ public class AnswerRepositoryTest {
 
 	@Before
 	public void setUp() {
-		firstAnswer = new Answer("Answer 1");
-		secondAnswer = new Answer("Answer 2");
-
 		question = new Question("Question");
-		firstAnswer.setQuestion(question);
-		secondAnswer.setQuestion(question);
+		firstAnswer = new Answer("Answer 1", question);
+		secondAnswer = new Answer("Answer 2", question);
 	}
 
 	@Test

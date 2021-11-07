@@ -35,7 +35,7 @@ public class QuestionRepositoryTest {
 
 	@Test
 	public void saveQuestionAndFindById() {
-		Question savedQuestion = questionRepository.save(firstQuestion);
+		Question savedQuestion = questionRepository.saveAndFlush(firstQuestion);
 		Optional<Question> foundQuestion = questionRepository
 				.findById(savedQuestion.getId());
 
@@ -46,10 +46,19 @@ public class QuestionRepositoryTest {
 
 	@Test
 	public void findAllQuestions() {
-		questionRepository.save(firstQuestion);
-		questionRepository.save(secondQuestion);
+		questionRepository.saveAndFlush(firstQuestion);
+		questionRepository.saveAndFlush(secondQuestion);
 		List<Question> questions = questionRepository.findAll();
 
 		assertThat(questions).isNotNull();
+	}
+	
+	@Test
+	public void deleteQuestions() {
+		questionRepository.saveAndFlush(firstQuestion);
+		questionRepository.saveAndFlush(secondQuestion);
+		questionRepository.deleteAll();
+		
+		assertThat(questionRepository.findAll()).isEmpty();
 	}
 }
